@@ -1,0 +1,8 @@
+{
+  "name": "Simulacro de Pruebas Nacionales",
+  "description": "Un simulador web dinámico y completo para las Pruebas Nacionales del Ministerio de Educación de la República Dominicana (MINERD), con materias de Matemáticas, Lengua Española, Ciencias Sociales y Ciencias de la Naturaleza, con base de datos de usuarios local y planes de reforzamiento.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
