@@ -1,1 +1,51 @@
+# Workflow de GitHub Actions para compilar y desplegar automáticamente en GitHub Pages usando la API oficial de Pages
+name: Desplegar en GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+# Configura los permisos del GITHUB_TOKEN para permitir el despliegue en GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Permite solo un despliegue concurrente para evitar conflictos
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js ⚙️
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependencias 🔧
+        run: npm ci || npm install
+
+      - name: Compilar proyecto 🏗️
+        run: npm run build
+
+      - name: Subir artefacto de Pages 📤
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
+      - name: Desplegar en GitHub Pages 🚀
+        id: deployment
+        uses: actions/deploy-pages@v4
 
